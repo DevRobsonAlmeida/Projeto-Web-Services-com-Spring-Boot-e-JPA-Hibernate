@@ -5,15 +5,15 @@
  */
 package br.com.robson.projeto.course.config;
 
+import br.com.robson.projeto.course.entites.Category;
 import br.com.robson.projeto.course.entites.Order;
 import br.com.robson.projeto.course.entites.User;
 import br.com.robson.projeto.course.entites.enums.OrderStatus;
+import br.com.robson.projeto.course.repository.CategoryRepository;
 import br.com.robson.projeto.course.repository.OrderRepository;
 import br.com.robson.projeto.course.repository.UserRepository;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +32,19 @@ public class TesteConfig implements CommandLineRunner {
     
     @Autowired
     private OrderRepository orderRepository;
+    
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
+        
+        Category c1 = new Category(null, "Electronics");
+        Category c2 = new Category(null, "Books");
+        Category c3 = new Category(null, "Computers");
+        
+        categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
+        
         
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
