@@ -6,6 +6,7 @@
 package br.com.robson.projeto.course.entites;
 
 import br.com.robson.projeto.course.entites.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -29,6 +30,8 @@ public class Order implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    //Anotação usada para Deixa o retorno em String
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss:'Z'", timezone = "GMT")
     private Date moment;
     private OrderStatus orderStatus;
     
@@ -43,6 +46,13 @@ public class Order implements Serializable{
     public Order(Long id, Date moment, User client) {
         this.id = id;
         this.moment = moment;
+        this.client = client;
+    }
+
+    public Order(Long id, Date moment, OrderStatus orderStatus, User client) {
+        this.id = id;
+        this.moment = moment;
+        this.orderStatus = orderStatus;
         this.client = client;
     }
 
@@ -69,6 +79,16 @@ public class Order implements Serializable{
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+    
+    
 
     @Override
     public int hashCode() {
