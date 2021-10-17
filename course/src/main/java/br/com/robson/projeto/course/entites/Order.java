@@ -8,7 +8,7 @@ package br.com.robson.projeto.course.entites;
 import br.com.robson.projeto.course.entites.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,35 +24,37 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_order")
-public class Order implements Serializable{
+public class Order implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //Anotação usada para Deixa o retorno em String
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss:'Z'", timezone = "GMT")
-    private Date moment;
-    private OrderStatus orderStatus;
-    
+    private Instant moment;
+
+    private Integer orderStatus;
+
     @ManyToOne
-    @JoinColumn(name="client_id")
+    @JoinColumn(name = "client_id")
     private User client;
 
     public Order() {
-    
+
     }
 
-    public Order(Long id, Date moment, User client) {
+    public Order(Long id, Instant moment, User client) {
         this.id = id;
         this.moment = moment;
         this.client = client;
     }
 
-    public Order(Long id, Date moment, OrderStatus orderStatus, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
-        this.orderStatus = orderStatus;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
@@ -63,21 +65,23 @@ public class Order implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Date getMoment() {
+
+    public Instant getMoment() {
         return moment;
     }
 
-    public void setMoment(Date moment) {
+    public void setMoment(Instant moment) {
         this.moment = moment;
     }
 
     public OrderStatus getOrderStatus() {
-        return orderStatus;
+        return OrderStatus.valueOf(orderStatus);
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+        if (orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public User getClient() {
@@ -87,8 +91,6 @@ public class Order implements Serializable{
     public void setClient(User client) {
         this.client = client;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -114,6 +116,5 @@ public class Order implements Serializable{
         }
         return true;
     }
-    
-    
+
 }
