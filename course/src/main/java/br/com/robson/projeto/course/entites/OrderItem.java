@@ -5,12 +5,11 @@
 package br.com.robson.projeto.course.entites;
 
 import br.com.robson.projeto.course.entites.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 /**
@@ -19,21 +18,21 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tb_ordem_item")
-public class OrdemItem implements Serializable {
+public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public OrderItemPK id;
+    
+    public OrderItemPK id = new OrderItemPK();
+
     private Integer quantity;
     private Double price;
 
-    public OrdemItem() {
+    public OrderItem() {
     }
 
-    public OrdemItem(Order order, Product product, Integer quantity, Double price) {
-        super();
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
@@ -43,9 +42,8 @@ public class OrdemItem implements Serializable {
     public double subTotal() {
         return quantity * price;
     }
-    
-    
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
@@ -96,7 +94,7 @@ public class OrdemItem implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final OrdemItem other = (OrdemItem) obj;
+        final OrderItem other = (OrderItem) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

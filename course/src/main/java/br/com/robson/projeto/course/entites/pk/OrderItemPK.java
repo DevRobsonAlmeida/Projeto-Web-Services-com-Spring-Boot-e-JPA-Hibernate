@@ -6,11 +6,11 @@ package br.com.robson.projeto.course.entites.pk;
 
 import br.com.robson.projeto.course.entites.Order;
 import br.com.robson.projeto.course.entites.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -29,6 +29,8 @@ public class OrderItemPK  implements Serializable{
     @JoinColumn(name = "product_id")
     private Product product;
 
+    
+    @JsonIgnore
     public Order getOrder() {
         return order;
     }

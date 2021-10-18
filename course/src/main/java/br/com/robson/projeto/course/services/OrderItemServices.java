@@ -5,29 +5,29 @@
  */
 package br.com.robson.projeto.course.services;
 
-import br.com.robson.projeto.course.entites.Order;
+import br.com.robson.projeto.course.entites.OrderItem;
+import br.com.robson.projeto.course.repository.OrderItemRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.robson.projeto.course.repository.OrderRepository;
 
 /**
  *
  * @author 99030499
  */
 @Service
-public class OrderServices {
+public class OrderItemServices {
     
     @Autowired
-    private OrderRepository repository;
+    private OrderItemRepository repository;
     
-    public List<Order> findAll(){
+    public List<OrderItem> findAll(){
         return repository.findAll();
     }
     
-    public Order findById(Long id){
-        Optional<Order> obj = repository.findById(id);
+    public OrderItem findById(Long id){
+        Optional<OrderItem> obj = repository.findById(id);
         return obj.get();
     }
 }
