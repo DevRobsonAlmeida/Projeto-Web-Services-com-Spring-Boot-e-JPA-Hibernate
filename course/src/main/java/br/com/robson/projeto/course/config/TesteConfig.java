@@ -8,6 +8,7 @@ package br.com.robson.projeto.course.config;
 import br.com.robson.projeto.course.entites.Category;
 import br.com.robson.projeto.course.entites.Order;
 import br.com.robson.projeto.course.entites.OrderItem;
+import br.com.robson.projeto.course.entites.Payment;
 import br.com.robson.projeto.course.entites.Product;
 import br.com.robson.projeto.course.entites.User;
 import br.com.robson.projeto.course.entites.enums.OrderStatus;
@@ -89,7 +90,10 @@ public class TesteConfig implements CommandLineRunner {
         
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
         
-
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+        o1.setPayment(pay1);
+        
+        orderRepository.save(o1);
     }
 ;
 }
