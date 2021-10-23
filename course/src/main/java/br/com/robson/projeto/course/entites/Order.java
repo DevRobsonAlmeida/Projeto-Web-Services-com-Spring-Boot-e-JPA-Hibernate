@@ -7,7 +7,6 @@ package br.com.robson.projeto.course.entites;
 
 import br.com.robson.projeto.course.entites.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -98,19 +97,17 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
-
+    
+    public Set<OrderItem> getItems(){
+        return items;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
     }
-    
-    public Set<OrderItem> getItems(){
-        return items;
-    }
-    
-    
 
     @Override
     public boolean equals(Object obj) {
