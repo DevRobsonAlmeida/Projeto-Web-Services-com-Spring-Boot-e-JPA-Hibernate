@@ -7,6 +7,7 @@ package br.com.robson.projeto.course.services;
 
 import br.com.robson.projeto.course.entites.User;
 import br.com.robson.projeto.course.repository.UserRepository;
+import br.com.robson.projeto.course.services.exceptions.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserServices {
     
     public User findById(Long id){
         Optional<User> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
     
     public User insert(User obj){
